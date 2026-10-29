@@ -1,0 +1,192 @@
+{
+  "m1_tracking": [
+    {
+      "topology": "chain",
+      "artifacts": 10,
+      "edges": 9,
+      "record_us_per_artifact": 2.166699960071128,
+      "descendants_root_ms": 0.0020830002540606074,
+      "invalidated_from_root": 9,
+      "descendants_branch_ms": 0.0013750004654866643,
+      "invalidated_from_branch": 4
+    },
+    {
+      "topology": "chain",
+      "artifacts": 100,
+      "edges": 99,
+      "record_us_per_artifact": 2.0162500004516914,
+      "descendants_root_ms": 0.018667000404093415,
+      "invalidated_from_root": 99,
+      "descendants_branch_ms": 0.012417000107234344,
+      "invalidated_from_branch": 49
+    },
+    {
+      "topology": "chain",
+      "artifacts": 1000,
+      "edges": 999,
+      "record_us_per_artifact": 2.244582999992417,
+      "descendants_root_ms": 0.20120800036238506,
+      "invalidated_from_root": 999,
+      "descendants_branch_ms": 0.14762499995413236,
+      "invalidated_from_branch": 499
+    },
+    {
+      "topology": "chain",
+      "artifacts": 10000,
+      "edges": 9999,
+      "record_us_per_artifact": 2.8022208000038518,
+      "descendants_root_ms": 2.403084000434319,
+      "invalidated_from_root": 9999,
+      "descendants_branch_ms": 1.7769589994713897,
+      "invalidated_from_branch": 4999
+    },
+    {
+      "topology": "fanout3",
+      "artifacts": 10,
+      "edges": 9,
+      "record_us_per_artifact": 2.179199964302825,
+      "descendants_root_ms": 0.002249999852210749,
+      "invalidated_from_root": 9,
+      "descendants_branch_ms": 0.0013330000001587905,
+      "invalidated_from_branch": 3
+    },
+    {
+      "topology": "fanout3",
+      "artifacts": 100,
+      "edges": 99,
+      "record_us_per_artifact": 2.2333299966703635,
+      "descendants_root_ms": 0.020250000488886144,
+      "invalidated_from_root": 99,
+      "descendants_branch_ms": 0.012208000043756329,
+      "invalidated_from_branch": 39
+    },
+    {
+      "topology": "fanout3",
+      "artifacts": 1000,
+      "edges": 999,
+      "record_us_per_artifact": 2.2796250004830654,
+      "descendants_root_ms": 0.20679199951700866,
+      "invalidated_from_root": 999,
+      "descendants_branch_ms": 0.12383400007820455,
+      "invalidated_from_branch": 363
+    },
+    {
+      "topology": "fanout3",
+      "artifacts": 10000,
+      "edges": 9999,
+      "record_us_per_artifact": 2.4138165999829653,
+      "descendants_root_ms": 2.1952500001134467,
+      "invalidated_from_root": 9999,
+      "descendants_branch_ms": 1.2645420001717866,
+      "invalidated_from_branch": 3438
+    }
+  ],
+  "m2_provenance": {
+    "plans": 25,
+    "actions": 106,
+    "field_deps": 187,
+    "derive_us_per_action": 0.28262735762631186,
+    "match_us_per_dep": 0.10049198099684697
+  },
+  "m3_snapshot": [
+    {
+      "warehouses": 3,
+      "inventory_keys": 60,
+      "snapshot_ms": 0.02949999998236308,
+      "restore_ms": 0.03004199970746413
+    },
+    {
+      "warehouses": 10,
+      "inventory_keys": 200,
+      "snapshot_ms": 0.08283300030598184,
+      "restore_ms": 0.08316699950228212
+    },
+    {
+      "warehouses": 100,
+      "inventory_keys": 2000,
+      "snapshot_ms": 0.7664999993721722,
+      "restore_ms": 0.7715419997111894
+    },
+    {
+      "warehouses": 1000,
+      "inventory_keys": 20000,
+      "snapshot_ms": 7.715875000030792,
+      "restore_ms": 7.744417000139947
+    }
+  ],
+  "m3_compensate": [
+    {
+      "executed_actions": 1,
+      "compensate_ms": 0.0030409992177737877,
+      "compensate_us_per_action": 3.0409992177737877,
+      "snapshot_restore_ms_same_world": 0.08283399984065909
+    },
+    {
+      "executed_actions": 10,
+      "compensate_ms": 0.01820899979065871,
+      "compensate_us_per_action": 1.8208999790658709,
+      "snapshot_restore_ms_same_world": 0.08341600005223881
+    },
+    {
+      "executed_actions": 100,
+      "compensate_ms": 0.270417000137968,
+      "compensate_us_per_action": 2.70417000137968,
+      "snapshot_restore_ms_same_world": 0.08279200028482592
+    },
+    {
+      "executed_actions": 1000,
+      "compensate_ms": 12.018917000204965,
+      "compensate_us_per_action": 12.018917000204965,
+      "snapshot_restore_ms_same_world": 0.08316599996760488
+    }
+  ],
+  "m4_rule_verifier": [
+    {
+      "check": "research",
+      "median_us": 17.35400019242661,
+      "max_us": 27.832999876409303,
+      "env_reads": 4.64
+    },
+    {
+      "check": "plan",
+      "median_us": 17.166499674203806,
+      "max_us": 22.957999590289546,
+      "env_reads": 4.64
+    },
+    {
+      "check": "calls",
+      "median_us": 8.896000053937314,
+      "max_us": 13.02049986406928,
+      "env_reads": 0
+    }
+  ],
+  "m5_stage_llm": [
+    {
+      "stage": "researcher",
+      "calls": 25,
+      "prompt_tokens": 523.76,
+      "completion_tokens": 225.24,
+      "est_latency_s": 10.127112656286146
+    },
+    {
+      "stage": "planner",
+      "calls": 25,
+      "prompt_tokens": 748.96,
+      "completion_tokens": 225.2,
+      "est_latency_s": 10.427639767594895
+    },
+    {
+      "stage": "executor",
+      "calls": 25,
+      "prompt_tokens": 533.04,
+      "completion_tokens": 156.8,
+      "est_latency_s": 7.275967362669201
+    }
+  ],
+  "m5_llm_verifier_check": {
+    "runs": 21,
+    "prompt_tokens": 676.5396825396825,
+    "completion_tokens": 281.031746031746,
+    "est_latency_s": 12.666513696334677
+  }
+}

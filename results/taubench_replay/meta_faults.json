@@ -1,0 +1,22 @@
+{
+  "agent": "replay",
+  "model": "replay",
+  "provider": "openai",
+  "temperature": 0.0,
+  "faults": [
+    "corrupt_read",
+    "corrupt_read_irrelevant",
+    "wrong_args",
+    "transient_error",
+    "lost_response",
+    "injection"
+  ],
+  "conditions": [
+    "no_recovery",
+    "restart_snapshot",
+    "restart_compensate",
+    "verify_rule"
+  ],
+  "tau_bench_commit": "59a200c6d575d595120f1cb70fea53cef0632f6b",
+  "user": "scripted"
+}

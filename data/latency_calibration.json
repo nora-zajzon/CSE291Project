@@ -1,0 +1,5 @@
+{
+  "model": "qwen2.5:7b-instruct",
+  "pp_tok_per_s": 745.2,
+  "tg_tok_per_s": 23.9
+}

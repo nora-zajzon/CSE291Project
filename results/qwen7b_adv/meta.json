@@ -1,0 +1,17 @@
+{
+  "backend": "ollama",
+  "model": "qwen2.5:7b-instruct",
+  "seeds": "0",
+  "temperature": 0.0,
+  "n_tasks": 25,
+  "conditions": [
+    "no_recovery",
+    "restart_snapshot",
+    "restart_compensate",
+    "verify_rule",
+    "verify_llm"
+  ],
+  "n_runs": 375,
+  "elapsed_s": 2553.5,
+  "timeout_budget_s": 30.0
+}

@@ -1,0 +1,2538 @@
+[
+  {
+    "task_id": "T01",
+    "category": "single_wh_single_item",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "monitor": 3,
+            "headset": 4,
+            "keyboard": 1
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-6316",
+          "items": {
+            "monitor": 2
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "central",
+          "customer_note": "Please leave the package at the front desk.",
+          "amount_paid": 360
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 1,
+      "optimal_sets": [
+        [
+          "warehouse_A"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "monitor": 2
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T02",
+    "category": "single_wh_single_item",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "mouse": 8,
+            "headset": 8,
+            "dock": 2
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-1357",
+          "items": {
+            "headset": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "central",
+          "customer_note": "Please leave the package at the front desk.",
+          "amount_paid": 70
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 1,
+      "optimal_sets": [
+        [
+          "warehouse_A"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "headset": 1
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T03",
+    "category": "single_wh_single_item",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "headset": 2,
+            "keyboard": 7,
+            "mouse": 1
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-9040",
+          "items": {
+            "headset": 2
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "Please leave the package at the front desk.",
+          "amount_paid": 140
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 1,
+      "optimal_sets": [
+        [
+          "warehouse_A"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "headset": 2
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T04",
+    "category": "single_wh_multi_item",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "headset": 8,
+            "keyboard": 6,
+            "dock": 7,
+            "mouse": 5
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-7776",
+          "items": {
+            "headset": 5,
+            "keyboard": 3,
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 555
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 1,
+      "optimal_sets": [
+        [
+          "warehouse_A"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "headset": 5,
+          "keyboard": 3,
+          "mouse": 1
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T05",
+    "category": "single_wh_multi_item",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "keyboard": 1,
+            "monitor": 4,
+            "mouse": 4,
+            "laptop": 4
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-9252",
+          "items": {
+            "monitor": 4,
+            "mouse": 2,
+            "keyboard": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "central",
+          "customer_note": "Deliver after 9am if possible.",
+          "amount_paid": 830
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 1,
+      "optimal_sets": [
+        [
+          "warehouse_A"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "monitor": 4,
+          "mouse": 2,
+          "keyboard": 1
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T06",
+    "category": "single_wh_multi_item",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "mouse": 3,
+            "laptop": 7,
+            "headset": 8,
+            "monitor": 5
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-2199",
+          "items": {
+            "monitor": 2,
+            "mouse": 1,
+            "headset": 4
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "west",
+          "customer_note": "Please leave the package at the front desk.",
+          "amount_paid": 665
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 1,
+      "optimal_sets": [
+        [
+          "warehouse_A"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "monitor": 2,
+          "mouse": 1,
+          "headset": 4
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T07",
+    "category": "multi_wh_one_feasible",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "headset": 6,
+            "dock": 3,
+            "keyboard": 5,
+            "monitor": 4
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "headset": 3,
+            "dock": 8,
+            "keyboard": 3,
+            "monitor": 6
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "headset": 5,
+            "dock": 7,
+            "keyboard": 4,
+            "monitor": 4
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-7974",
+          "items": {
+            "monitor": 2,
+            "keyboard": 5
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "east",
+          "customer_note": "Please leave the package at the front desk.",
+          "amount_paid": 660
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 1,
+      "optimal_sets": [
+        [
+          "warehouse_A"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "monitor": 2,
+          "keyboard": 5
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T08",
+    "category": "multi_wh_one_feasible",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "mouse": 7,
+            "dock": 5,
+            "laptop": 2,
+            "monitor": 3
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "mouse": 1,
+            "dock": 5,
+            "laptop": 0,
+            "monitor": 3
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "mouse": 6,
+            "dock": 0,
+            "laptop": 2,
+            "monitor": 6
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-7632",
+          "items": {
+            "dock": 2,
+            "laptop": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "central",
+          "customer_note": "",
+          "amount_paid": 1140
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 1,
+      "optimal_sets": [
+        [
+          "warehouse_A"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "dock": 2,
+          "laptop": 1
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T09",
+    "category": "multi_wh_one_feasible",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "mouse": 0,
+            "headset": 1,
+            "monitor": 2,
+            "laptop": 2
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "mouse": 2,
+            "headset": 0,
+            "monitor": 8,
+            "laptop": 5
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "mouse": 7,
+            "headset": 0,
+            "monitor": 2,
+            "laptop": 6
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-6542",
+          "items": {
+            "monitor": 5,
+            "laptop": 2
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "Call the reception on arrival.",
+          "amount_paid": 2700
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 1,
+      "optimal_sets": [
+        [
+          "warehouse_B"
+        ]
+      ],
+      "allocation": {
+        "warehouse_B": {
+          "monitor": 5,
+          "laptop": 2
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T10",
+    "category": "multi_wh_many_feasible",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "headset": 7,
+            "dock": 6,
+            "laptop": 1,
+            "keyboard": 2
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "headset": 8,
+            "dock": 6,
+            "laptop": 1,
+            "keyboard": 5
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "headset": 4,
+            "dock": 8,
+            "laptop": 4,
+            "keyboard": 5
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-4316",
+          "items": {
+            "dock": 5,
+            "headset": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 670
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 1,
+      "optimal_sets": [
+        [
+          "warehouse_A"
+        ],
+        [
+          "warehouse_B"
+        ],
+        [
+          "warehouse_C"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "dock": 5,
+          "headset": 1
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T11",
+    "category": "multi_wh_many_feasible",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "keyboard": 6,
+            "monitor": 8,
+            "dock": 7,
+            "headset": 5
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "keyboard": 0,
+            "monitor": 6,
+            "dock": 5,
+            "headset": 3
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "keyboard": 7,
+            "monitor": 4,
+            "dock": 6,
+            "headset": 3
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-6785",
+          "items": {
+            "dock": 4,
+            "monitor": 5
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "east",
+          "customer_note": "Gift order - no invoice in the box.",
+          "amount_paid": 1380
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 1,
+      "optimal_sets": [
+        [
+          "warehouse_A"
+        ],
+        [
+          "warehouse_B"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "dock": 4,
+          "monitor": 5
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T12",
+    "category": "requires_split",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "monitor": 6,
+            "laptop": 2,
+            "dock": 5,
+            "mouse": 4
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "monitor": 1,
+            "laptop": 1,
+            "dock": 6,
+            "mouse": 3
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "monitor": 1,
+            "laptop": 8,
+            "dock": 4,
+            "mouse": 1
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-4841",
+          "items": {
+            "laptop": 3,
+            "mouse": 3
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "Please leave the package at the front desk.",
+          "amount_paid": 2775
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 2,
+      "optimal_sets": [
+        [
+          "warehouse_A",
+          "warehouse_B"
+        ],
+        [
+          "warehouse_A",
+          "warehouse_C"
+        ],
+        [
+          "warehouse_B",
+          "warehouse_C"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "laptop": 2,
+          "mouse": 3
+        },
+        "warehouse_B": {
+          "laptop": 1
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T13",
+    "category": "requires_split",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "keyboard": 7,
+            "mouse": 6,
+            "dock": 0,
+            "headset": 5
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "keyboard": 6,
+            "mouse": 4,
+            "dock": 7,
+            "headset": 1
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "keyboard": 6,
+            "mouse": 2,
+            "dock": 1,
+            "headset": 5
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-5664",
+          "items": {
+            "mouse": 5,
+            "dock": 4
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "central",
+          "customer_note": "Deliver after 9am if possible.",
+          "amount_paid": 605
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 2,
+      "optimal_sets": [
+        [
+          "warehouse_A",
+          "warehouse_B"
+        ],
+        [
+          "warehouse_B",
+          "warehouse_C"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "mouse": 5
+        },
+        "warehouse_B": {
+          "dock": 4
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T14",
+    "category": "requires_split",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "laptop": 4,
+            "dock": 6,
+            "mouse": 4,
+            "headset": 7
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "laptop": 3,
+            "dock": 2,
+            "mouse": 3,
+            "headset": 1
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "laptop": 3,
+            "dock": 3,
+            "mouse": 4,
+            "headset": 7
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-9520",
+          "items": {
+            "mouse": 5,
+            "headset": 4
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "central",
+          "customer_note": "Gift order - no invoice in the box.",
+          "amount_paid": 405
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 2,
+      "optimal_sets": [
+        [
+          "warehouse_A",
+          "warehouse_B"
+        ],
+        [
+          "warehouse_A",
+          "warehouse_C"
+        ],
+        [
+          "warehouse_B",
+          "warehouse_C"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "mouse": 4,
+          "headset": 4
+        },
+        "warehouse_B": {
+          "mouse": 1
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T15",
+    "category": "requires_split",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "mouse": 3,
+            "headset": 0,
+            "monitor": 0,
+            "keyboard": 6
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "mouse": 6,
+            "headset": 6,
+            "monitor": 4,
+            "keyboard": 3
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "mouse": 4,
+            "headset": 3,
+            "monitor": 7,
+            "keyboard": 0
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-2240",
+          "items": {
+            "monitor": 4,
+            "keyboard": 4
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "central",
+          "customer_note": "Deliver after 9am if possible.",
+          "amount_paid": 960
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 2,
+      "optimal_sets": [
+        [
+          "warehouse_A",
+          "warehouse_B"
+        ],
+        [
+          "warehouse_A",
+          "warehouse_C"
+        ]
+      ],
+      "allocation": {
+        "warehouse_B": {
+          "monitor": 4
+        },
+        "warehouse_A": {
+          "keyboard": 4
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T16",
+    "category": "infeasible",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "laptop": 2,
+            "dock": 0,
+            "mouse": 0,
+            "monitor": 1
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "laptop": 3,
+            "dock": 0,
+            "mouse": 8,
+            "monitor": 7
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "laptop": 8,
+            "dock": 1,
+            "mouse": 5,
+            "monitor": 0
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-1253",
+          "items": {
+            "dock": 2,
+            "laptop": 5
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "west",
+          "customer_note": "Call the reception on arrival.",
+          "amount_paid": 4740
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": false,
+      "min_shipments": null,
+      "optimal_sets": [],
+      "allocation": {}
+    }
+  },
+  {
+    "task_id": "T17",
+    "category": "infeasible",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "mouse": 3,
+            "laptop": 0,
+            "headset": 2,
+            "monitor": 3
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "mouse": 7,
+            "laptop": 7,
+            "headset": 0,
+            "monitor": 0
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "mouse": 6,
+            "laptop": 6,
+            "headset": 2,
+            "monitor": 3
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-3376",
+          "items": {
+            "monitor": 4,
+            "headset": 5
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "Call the reception on arrival.",
+          "amount_paid": 1070
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": false,
+      "min_shipments": null,
+      "optimal_sets": [],
+      "allocation": {}
+    }
+  },
+  {
+    "task_id": "T18",
+    "category": "excluded_warehouse",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order. Do not use warehouse_C (quality hold on outbound stock).",
+    "constraints": {
+      "excluded_warehouses": [
+        "warehouse_C"
+      ],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "monitor": 0,
+            "headset": 2,
+            "keyboard": 0,
+            "laptop": 8
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "monitor": 8,
+            "headset": 8,
+            "keyboard": 3,
+            "laptop": 0
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "monitor": 3,
+            "headset": 8,
+            "keyboard": 8,
+            "laptop": 4
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-1307",
+          "items": {
+            "laptop": 4,
+            "headset": 3
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 3810
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 2,
+      "optimal_sets": [
+        [
+          "warehouse_A",
+          "warehouse_B"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "laptop": 4,
+          "headset": 2
+        },
+        "warehouse_B": {
+          "headset": 1
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T19",
+    "category": "excluded_warehouse",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "closed",
+          "inventory": {
+            "keyboard": 0,
+            "monitor": 6,
+            "mouse": 7,
+            "headset": 3
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "keyboard": 1,
+            "monitor": 6,
+            "mouse": 1,
+            "headset": 6
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "keyboard": 2,
+            "monitor": 4,
+            "mouse": 2,
+            "headset": 4
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-9188",
+          "items": {
+            "monitor": 5,
+            "mouse": 3
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "Gift order - no invoice in the box.",
+          "amount_paid": 975
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 2,
+      "optimal_sets": [
+        [
+          "warehouse_B",
+          "warehouse_C"
+        ]
+      ],
+      "allocation": {
+        "warehouse_B": {
+          "monitor": 5,
+          "mouse": 1
+        },
+        "warehouse_C": {
+          "mouse": 2
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T20",
+    "category": "excluded_warehouse",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order. Do not use warehouse_C (quality hold on outbound stock).",
+    "constraints": {
+      "excluded_warehouses": [
+        "warehouse_C"
+      ],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "laptop": 4,
+            "dock": 8,
+            "mouse": 4,
+            "keyboard": 6
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "laptop": 3,
+            "dock": 1,
+            "mouse": 7,
+            "keyboard": 4
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "laptop": 5,
+            "dock": 5,
+            "mouse": 4,
+            "keyboard": 0
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-3142",
+          "items": {
+            "laptop": 5,
+            "dock": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "east",
+          "customer_note": "Deliver after 9am if possible.",
+          "amount_paid": 4620
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 2,
+      "optimal_sets": [
+        [
+          "warehouse_A",
+          "warehouse_B"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "laptop": 4,
+          "dock": 1
+        },
+        "warehouse_B": {
+          "laptop": 1
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T21",
+    "category": "irrelevant_info_heavy",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "monitor": 1,
+            "laptop": 8,
+            "headset": 8,
+            "dock": 4,
+            "keyboard": 6,
+            "mouse": 2
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "monitor": 1,
+            "laptop": 6,
+            "headset": 1,
+            "dock": 6,
+            "keyboard": 0,
+            "mouse": 6
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "monitor": 2,
+            "laptop": 5,
+            "headset": 6,
+            "dock": 5,
+            "keyboard": 5,
+            "mouse": 5
+          }
+        },
+        "warehouse_D": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "monitor": 6,
+            "laptop": 8,
+            "headset": 4,
+            "dock": 0,
+            "keyboard": 6,
+            "mouse": 1
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-5031",
+          "items": {
+            "mouse": 2,
+            "monitor": 2
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "west",
+          "customer_note": "Gift order - no invoice in the box.",
+          "amount_paid": 410
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 1,
+      "optimal_sets": [
+        [
+          "warehouse_C"
+        ]
+      ],
+      "allocation": {
+        "warehouse_C": {
+          "mouse": 2,
+          "monitor": 2
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T22",
+    "category": "irrelevant_info_heavy",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "dock": 5,
+            "keyboard": 8,
+            "monitor": 0,
+            "mouse": 4,
+            "laptop": 3,
+            "headset": 2
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "dock": 5,
+            "keyboard": 3,
+            "monitor": 1,
+            "mouse": 5,
+            "laptop": 2,
+            "headset": 7
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "dock": 2,
+            "keyboard": 2,
+            "monitor": 8,
+            "mouse": 5,
+            "laptop": 1,
+            "headset": 6
+          }
+        },
+        "warehouse_D": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "dock": 1,
+            "keyboard": 7,
+            "monitor": 6,
+            "mouse": 0,
+            "laptop": 2,
+            "headset": 3
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-1446",
+          "items": {
+            "mouse": 3,
+            "laptop": 3
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 2775
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 1,
+      "optimal_sets": [
+        [
+          "warehouse_A"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "mouse": 3,
+          "laptop": 3
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T23",
+    "category": "irrelevant_info_heavy",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "mouse": 7,
+            "monitor": 8,
+            "laptop": 8,
+            "keyboard": 7,
+            "headset": 2,
+            "dock": 8
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "mouse": 1,
+            "monitor": 2,
+            "laptop": 4,
+            "keyboard": 2,
+            "headset": 2,
+            "dock": 4
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "mouse": 4,
+            "monitor": 1,
+            "laptop": 8,
+            "keyboard": 4,
+            "headset": 4,
+            "dock": 3
+          }
+        },
+        "warehouse_D": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "mouse": 4,
+            "monitor": 5,
+            "laptop": 7,
+            "keyboard": 7,
+            "headset": 8,
+            "dock": 5
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-1293",
+          "items": {
+            "mouse": 5,
+            "laptop": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 1025
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 1,
+      "optimal_sets": [
+        [
+          "warehouse_A"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "mouse": 5,
+          "laptop": 1
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T24",
+    "category": "partially_shipped",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "mouse": 6,
+            "laptop": 0,
+            "monitor": 3,
+            "headset": 6
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "mouse": 5,
+            "laptop": 6,
+            "monitor": 1,
+            "headset": 4
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "mouse": 7,
+            "laptop": 3,
+            "monitor": 7,
+            "headset": 3
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-4037",
+          "items": {
+            "mouse": 2,
+            "laptop": 5
+          },
+          "shipped": {
+            "mouse": 1
+          },
+          "status": "partially_shipped",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "Call the reception on arrival.",
+          "amount_paid": 4550
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 1,
+      "optimal_sets": [
+        [
+          "warehouse_B"
+        ]
+      ],
+      "allocation": {
+        "warehouse_B": {
+          "mouse": 1,
+          "laptop": 5
+        }
+      }
+    }
+  },
+  {
+    "task_id": "T25",
+    "category": "partially_shipped",
+    "order_id": "order_1",
+    "instruction": "Fulfill order_1 (all remaining items) using the fewest shipments possible. One shipment is made per warehouse used. Never let inventory go negative. Notify the customer once the order has shipped. If the order cannot be fully fulfilled from available stock, mark it infeasible instead of shipping a partial order.",
+    "constraints": {
+      "excluded_warehouses": [],
+      "allow_backorder": false
+    },
+    "initial_state": {
+      "warehouses": {
+        "warehouse_A": {
+          "region": "west",
+          "status": "open",
+          "inventory": {
+            "headset": 5,
+            "laptop": 4,
+            "keyboard": 3,
+            "monitor": 4
+          }
+        },
+        "warehouse_B": {
+          "region": "central",
+          "status": "open",
+          "inventory": {
+            "headset": 3,
+            "laptop": 4,
+            "keyboard": 7,
+            "monitor": 4
+          }
+        },
+        "warehouse_C": {
+          "region": "east",
+          "status": "open",
+          "inventory": {
+            "headset": 8,
+            "laptop": 7,
+            "keyboard": 7,
+            "monitor": 1
+          }
+        }
+      },
+      "orders": {
+        "order_1": {
+          "customer": "C-2791",
+          "items": {
+            "keyboard": 5,
+            "laptop": 1
+          },
+          "shipped": {
+            "keyboard": 2
+          },
+          "status": "partially_shipped",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "Please leave the package at the front desk.",
+          "amount_paid": 1200
+        },
+        "order_900": {
+          "customer": "C-0900",
+          "items": {
+            "mouse": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "standard",
+          "destination_region": "east",
+          "customer_note": "",
+          "amount_paid": 25
+        },
+        "order_901": {
+          "customer": "C-0901",
+          "items": {
+            "monitor": 1
+          },
+          "shipped": {},
+          "status": "pending",
+          "priority": "express",
+          "destination_region": "west",
+          "customer_note": "",
+          "amount_paid": 180
+        }
+      },
+      "reservations": [],
+      "shipments": [],
+      "notifications": [],
+      "refunds": []
+    },
+    "ground_truth": {
+      "feasible": true,
+      "min_shipments": 1,
+      "optimal_sets": [
+        [
+          "warehouse_A"
+        ],
+        [
+          "warehouse_B"
+        ],
+        [
+          "warehouse_C"
+        ]
+      ],
+      "allocation": {
+        "warehouse_A": {
+          "keyboard": 3,
+          "laptop": 1
+        }
+      }
+    }
+  }
+]

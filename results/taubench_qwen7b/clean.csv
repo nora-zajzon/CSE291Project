@@ -1,0 +1,18 @@
+task_index,fault,condition,reward,success,error,n_gt_writes,n_writes,n_irreversible,final_hash,write_sig,wall_s,llm_calls,prompt_tokens,completion_tokens,llm_latency_s
+0,none,clean,0.0,0,,1,0,0,5a4b2cb59f4d12dea7e4adff24a7f8fada510ead49372ea4a729a82bbb5f49b5,[],0.2,13,81420,2612,226.31
+2,none,clean,0.0,0,,1,0,0,5a4b2cb59f4d12dea7e4adff24a7f8fada510ead49372ea4a729a82bbb5f49b5,[],91.7,5,20129,498,91.52
+3,none,clean,0.0,0,,1,1,1,269955d3f57ae88700a6f6f42fc677a48c72623d3b6b1fed19ae4e7da0d30aee,"[[""modify_pending_order_items"", ""{\""item_ids\"": [\""3799046073\""], \""new_item_ids\"": [\""3799046073\""], \""order_id\"": \""#W6247578\"", \""payment_method_id\"": \""credit_card_9513926\""}""]]",170.4,10,47540,973,170.05
+4,none,clean,0.0,0,,2,0,0,5a4b2cb59f4d12dea7e4adff24a7f8fada510ead49372ea4a729a82bbb5f49b5,[],167.8,9,38434,962,167.64
+5,none,clean,0.0,0,,1,0,0,5a4b2cb59f4d12dea7e4adff24a7f8fada510ead49372ea4a729a82bbb5f49b5,[],0.2,14,72945,1778,185.93
+6,none,clean,0.0,0,,1,0,0,5a4b2cb59f4d12dea7e4adff24a7f8fada510ead49372ea4a729a82bbb5f49b5,[],206.5,8,35385,1286,206.25
+7,none,clean,0.0,0,,1,0,0,5a4b2cb59f4d12dea7e4adff24a7f8fada510ead49372ea4a729a82bbb5f49b5,[],167.8,10,43907,1052,167.67
+8,none,clean,0.0,0,,1,0,0,5a4b2cb59f4d12dea7e4adff24a7f8fada510ead49372ea4a729a82bbb5f49b5,[],1009.3,30,178077,6069,1009.01
+9,none,clean,0.0,0,,1,0,0,5a4b2cb59f4d12dea7e4adff24a7f8fada510ead49372ea4a729a82bbb5f49b5,[],201.6,12,56706,1254,201.23
+11,none,clean,0.0,0,,2,0,0,5a4b2cb59f4d12dea7e4adff24a7f8fada510ead49372ea4a729a82bbb5f49b5,[],139.6,10,43990,824,139.38
+12,none,clean,0.0,0,,2,1,1,86b77bcec51554ec8eb01fea530187d71d83c161803491aff1f8a9cd43644b4b,"[[""return_delivered_order_items"", ""{\""item_ids\"": [\""4579334072\"", \""6117189161\"", \""4947717507\""], \""order_id\"": \""#W5490111\"", \""payment_method_id\"": \""credit_card_3124723\""}""]]",297.8,11,57015,1749,297.53
+13,none,clean,0.0,0,,2,1,1,d182afac3f556117bbb8bd7cb7fc329c72bdbb0f3db2833c640fc170c33d0da3,"[[""return_delivered_order_items"", ""{\""item_ids\"": [\""5796612084\""], \""order_id\"": \""#W7387996\"", \""payment_method_id\"": \""paypal_9497703\""}""]]",141.6,9,43274,795,141.32
+14,none,clean,0.0,0,,2,0,0,5a4b2cb59f4d12dea7e4adff24a7f8fada510ead49372ea4a729a82bbb5f49b5,[],102.5,7,30207,609,102.41
+15,none,clean,0.0,0,,1,1,1,af1db49c24309193cf2ca330be3cee2e6f2423f7f8fa4c03894fd3fecd19f2e7,"[[""modify_pending_order_items"", ""{\""item_ids\"": [\""1615379700\""], \""new_item_ids\"": [\""1615379700\""], \""order_id\"": \""#W5199551\"", \""payment_method_id\"": \""gift_card_1675628\""}""]]",199.1,8,35895,1157,198.9
+16,none,clean,0.0,0,,3,0,0,5a4b2cb59f4d12dea7e4adff24a7f8fada510ead49372ea4a729a82bbb5f49b5,[],207.2,13,56985,1218,207.02
+17,none,clean,0.0,0,,1,1,0,5cac26d0a956e2337fec9d6afcbc623449563f4482a53224eaa05151334042ff,"[[""modify_pending_order_address"", ""{\""address1\"": \""123 Main St\"", \""address2\"": \""Suite 641\"", \""city\"": \""Boston\"", \""country\"": \""USA\"", \""order_id\"": \""#W8665881\"", \""state\"": \""MA\"", \""zip\"": \""02130\""}""]]",78.2,8,36617,502,78.0
+18,none,clean,0.0,0,,1,0,0,5a4b2cb59f4d12dea7e4adff24a7f8fada510ead49372ea4a729a82bbb5f49b5,[],126.4,9,38203,849,126.22

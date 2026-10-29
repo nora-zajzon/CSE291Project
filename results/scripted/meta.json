@@ -1,0 +1,20 @@
+{
+  "backend": "scripted",
+  "model": null,
+  "seeds": "0",
+  "temperature": 0.0,
+  "n_tasks": 25,
+  "conditions": [
+    "clean",
+    "clean_verify_rule",
+    "clean_verify_llm",
+    "no_recovery",
+    "restart_snapshot",
+    "restart_compensate",
+    "verify_rule",
+    "verify_llm"
+  ],
+  "n_runs": 1794,
+  "elapsed_s": 2.3,
+  "timeout_budget_s": 30.0
+}
