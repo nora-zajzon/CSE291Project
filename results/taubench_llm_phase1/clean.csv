@@ -1,0 +1,4 @@
+task_index,fault,condition,reward,success,error,n_gt_writes,n_writes,n_irreversible,final_hash,write_sig,wall_s,llm_calls,prompt_tokens,completion_tokens,llm_latency_s
+17,none,clean,0.0,0,,1,1,0,5cac26d0a956e2337fec9d6afcbc623449563f4482a53224eaa05151334042ff,"[[""modify_pending_order_address"", ""{\""address1\"": \""123 Main St\"", \""address2\"": \""Suite 641\"", \""city\"": \""Boston\"", \""country\"": \""USA\"", \""order_id\"": \""#W8665881\"", \""state\"": \""MA\"", \""zip\"": \""02130\""}""]]",27.1,3,12346,202,26.91
+48,none,clean,0.0,0,,1,0,0,5a4b2cb59f4d12dea7e4adff24a7f8fada510ead49372ea4a729a82bbb5f49b5,[],64.6,14,64227,1684,64.44
+53,none,clean,0.0,0,,1,0,0,5a4b2cb59f4d12dea7e4adff24a7f8fada510ead49372ea4a729a82bbb5f49b5,[],54.8,12,52631,1062,54.65

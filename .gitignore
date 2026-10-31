@@ -8,3 +8,5 @@ results/*/traces/
 !results/qwen7b_adv/traces/
 *.log
 results/langgraph_qwen7b/
+!results/taubench_llm_phase1/traces/
+!results/taubench_llm_grounded/traces/

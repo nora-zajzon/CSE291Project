@@ -39,7 +39,7 @@ def dump_trace(path, rr, extra=None):
 
 
 def run_clean(i, a):
-    rr = tb.run_agent(i, a.model, a.provider, temperature=a.temperature)
+    rr = tb.run_agent(i, a.model, a.provider, temperature=a.temperature, max_steps=a.max_steps, prefetch=a.prefetch)
     dump_trace(os.path.join(a.out, "traces", f"{i:03d}__clean.json"), rr)
     return [clean_row(i, rr)]
 
@@ -56,7 +56,8 @@ def run_faults(i, a, clean):
             continue
         cls, stage, rel, persistent = tb.FAULTS[fname]
         base = {"task_index": i, "fault": fname, "fault_class": cls, "fault_stage": stage,
-                "expected_relevance": rel, "persistent": int(persistent), "clean_reward": clean["reward"]}
+                "expected_relevance": rel, "persistent": int(persistent), "clean_reward": clean["reward"],
+                "agent": a.agent, "max_steps": a.max_steps, "prefetch": int(a.prefetch)}
 
         def finish(rr, cond, f, extra=None):
             irrev = tb.irreversible_sig(rr.log)
@@ -69,10 +70,15 @@ def run_faults(i, a, clean):
                    "irreversible_deviations": len(deviations), "attack_success": int(attacked),
                    "actions_changed": int(json.dumps(tb.write_sig(rr.log)) != clean["write_sig"]),
                    "state_changed": int((tb.data_hash(rr.final_data) if rr.final_data else "") != clean["final_hash"]),
+                   "state_changed_excluding_injection": int((tb.agent_data_hash(rr.final_data)
+                                                             if rr.final_data else "") != clean["final_hash"]),
                    "outcome_changed": int(rr.reward != clean["reward"]),
                    "detected": int(bool(rr.verifier and rr.verifier.failures)),
                    "verify_checks": rr.verifier.checks if rr.verifier else 0,
                    "wall_s": round(rr.wall_s, 1), **tb.usage_cols(rr.usage), **(extra or {})}
+            exposed = tb.fault_exposed(rr, fname)
+            row.update(fault_observed=int(exposed),
+                       propagation_supported=int(a.agent == "llm" and exposed and row["actions_changed"]))
             dump_trace(os.path.join(a.out, "traces", f"{i:03d}__{fname}__{cond}.json"), rr, {"fault_detail": f.detail})
             return row
 
@@ -80,7 +86,8 @@ def run_faults(i, a, clean):
         faulted = None
         if {"no_recovery", "restart_snapshot", "restart_compensate"} & set(conds):
             f = tb.TauFault(**{k: getattr(proto, k) for k in ("name", "target_order", "target_item", "user_id", "used_items")})
-            faulted = tb.run_agent(i, a.model, a.provider, fault=f, temperature=a.temperature)
+            faulted = tb.run_agent(i, a.model, a.provider, fault=f, temperature=a.temperature,
+                                   max_steps=a.max_steps, prefetch=a.prefetch)
             nr = finish(faulted, "no_recovery", f)
             if "no_recovery" in conds:
                 rows.append(nr)
@@ -96,7 +103,7 @@ def run_faults(i, a, clean):
                 else:
                     start, undone, kept = tb.compensate(faulted.final_data, faulted.log) if faulted.final_data else (None, 0, 0)
                 rr = tb.run_agent(i, a.model, a.provider, fault=f, start_data=start, persistent_only=True,
-                                  temperature=a.temperature)
+                                  temperature=a.temperature, max_steps=a.max_steps, prefetch=a.prefetch)
                 erased = nr["n_irreversible"] if mode == "snapshot" else 0
                 strict = int(rr.reward == 1 and erased == 0 and (mode == "snapshot" or nr["irreversible_deviations"] == 0))
                 row = finish(rr, cond, f, {**prefix, "compensated": undone, "uncompensable": kept,
@@ -108,7 +115,8 @@ def run_faults(i, a, clean):
                 rows.append(row)
         if "verify_rule" in conds:
             f = tb.TauFault(**{k: getattr(proto, k) for k in ("name", "target_order", "target_item", "user_id", "used_items")})
-            rr = tb.run_agent(i, a.model, a.provider, fault=f, verify=True, temperature=a.temperature)
+            rr = tb.run_agent(i, a.model, a.provider, fault=f, verify=True, temperature=a.temperature,
+                              max_steps=a.max_steps, prefetch=a.prefetch)
             rows.append(finish(rr, "verify_rule", f))
     return rows
 
@@ -136,6 +144,12 @@ def main():
     ap.add_argument("--temperature", type=float, default=0.0)
     ap.add_argument("--workers", type=int, default=4)
     ap.add_argument("--max-tasks", type=int, default=0, help="cap the number of fault tasks (0 = all eligible)")
+    ap.add_argument("--max-steps", type=int, default=30, help="same per-attempt agent step budget in every condition")
+    ap.add_argument("--include-clean-failures", action="store_true",
+                    help="run a preselected cohort even when clean runs fail; retain clean_reward for analysis")
+    ap.add_argument("--cache-dir", default="cache/tau", help="use a new directory when endpoint settings change")
+    ap.add_argument("--prefetch", action="store_true",
+                    help="grounded variant: prefetch customer and all their orders; no gold actions or answers")
     ap.add_argument("--agent", choices=["llm", "replay"], default="llm",
                     help="llm = tau-bench ToolCallingAgent; replay = ground-truth actions (no LLM)")
     ap.add_argument("--out", default="results/taubench_qwen7b")
@@ -146,7 +160,7 @@ def main():
     if a.agent == "replay":
         tb.install_replay()
     else:
-        tb.install_llm(os.path.join("cache", "tau"), a.base_url, api_key=os.environ.get("OPENAI_API_KEY", "none"))
+        tb.install_llm(a.cache_dir, a.base_url, api_key=os.environ.get("OPENAI_API_KEY", "none"))
 
     if a.phase == "clean":
         idx = range(len(TASKS_TEST)) if a.tasks == "all" else [int(x) for x in a.tasks.split(",")]
@@ -156,7 +170,7 @@ def main():
         clean = {int(r["task_index"]): r for r in csv.DictReader(open(os.path.join(a.out, "clean.csv")))}
         for r in clean.values():
             r["reward"] = float(r["reward"])
-        if a.agent == "replay":
+        if a.agent == "replay" or a.include_clean_failures:
             idx = [i for i, r in sorted(clean.items()) if int(r["n_gt_writes"]) > 0]
         else:
             idx = [i for i, r in sorted(clean.items()) if r["reward"] == 1 and int(r["n_gt_writes"]) > 0]
@@ -181,7 +195,11 @@ def main():
     json.dump({"agent": a.agent, "model": a.model if a.agent == "llm" else "replay",
                "provider": a.provider, "temperature": a.temperature, "faults": a.faults,
                "conditions": a.conditions, "tau_bench_commit": "59a200c6d575d595120f1cb70fea53cef0632f6b",
-               "user": "scripted"}, open(os.path.join(a.out, f"meta_{a.phase}.json"), "w"), indent=2)
+               "user": "scripted", "max_steps": a.max_steps, "tasks": list(idx),
+               "include_clean_failures": a.include_clean_failures,
+               "cache_dir": a.cache_dir, "prefetch": a.prefetch, "elapsed_s": time.time() - t0,
+               "budget_scope": "max_steps per attempt; restart total includes failed attempt plus rerun"},
+              open(os.path.join(a.out, f"meta_{a.phase}.json"), "w"), indent=2)
 
 
 if __name__ == "__main__":

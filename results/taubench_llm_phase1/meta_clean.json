@@ -1,0 +1,32 @@
+{
+  "agent": "llm",
+  "model": "qwen2.5:7b-instruct",
+  "provider": "openai",
+  "temperature": 0.0,
+  "faults": [
+    "corrupt_read",
+    "corrupt_read_irrelevant",
+    "wrong_args",
+    "transient_error",
+    "lost_response",
+    "injection"
+  ],
+  "conditions": [
+    "no_recovery",
+    "restart_snapshot",
+    "restart_compensate",
+    "verify_rule"
+  ],
+  "tau_bench_commit": "59a200c6d575d595120f1cb70fea53cef0632f6b",
+  "user": "scripted",
+  "max_steps": 16,
+  "tasks": [
+    17,
+    48,
+    53
+  ],
+  "include_clean_failures": false,
+  "cache_dir": "cache/tau_ctx16k",
+  "elapsed_s": 146.66518306732178,
+  "budget_scope": "max_steps per attempt; restart total includes failed attempt plus rerun"
+}

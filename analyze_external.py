@@ -30,6 +30,17 @@ def tau_section(d):
     agent = meta.get("agent", "llm")
     label = "replay of ground-truth actions" if agent == "replay" else "tau-bench's ToolCallingAgent"
     out = [f"## tau-bench retail ({label}, scripted customer)", ""]
+    if meta.get("prefetch"):
+        out += ["Grounded variant: the harness prefetches the customer's user record and all their "
+                "orders through the fault/verification hooks. No gold action or expected answer is "
+                "provided. This changes the observation protocol, so it is not an unmodified tau-bench score.", ""]
+    if agent == "replay":
+        out += ["Replay issues predetermined actions. Corrupted reads and injected instructions cannot "
+                "influence its choices; unchanged actions are not evidence of robustness. These runs "
+                "are state-recovery controls, not an LLM propagation experiment.", ""]
+    out += ["Latency estimates use token throughput. `wall_s` records actual elapsed run time (cache hits "
+            "make this shorter); `llm_latency_s` sums original measured model call times, including "
+            "cached calls. Restart costs must include both the faulted attempt and the rerun.", ""]
     c = pd.read_csv(os.path.join(d, "clean.csv"))
     c["est_latency_s"] = est_latency(c)
     out += [f"Clean: {int(c.success.sum())}/{len(c)} test tasks solved (pass^1 = {c.success.mean():.2f}); "
@@ -49,6 +60,36 @@ def tau_section(d):
                                 irreversible_dev=("irreversible_deviations", "mean"),
                                 attack_success=("attack_success", "mean"))
     out += ["### Propagation (no recovery)", "", md(t), ""]
+    if "fault_observed" in nr:
+        exposure = nr.groupby(["fault_class", "fault"]).agg(
+            tasks=("task_index", "size"), exposed_to_llm=("fault_observed", "sum"),
+            changed_actions_after_exposure=("propagation_supported", "sum"))
+        out += ["### Observation exposure and downstream changes", "", md(exposure), "",
+                "Exposure means the faulty tool observation appeared in a later model prompt. "
+                "Changed actions after exposure support propagation, but do not by themselves "
+                "establish a general causal guarantee. Action-argument faults occur after inference "
+                "and are assessed through the action/state comparisons above.", ""]
+    if "state_changed_excluding_injection" in nr:
+        out += ["Agent-caused state changes (the injected note itself is excluded):", "",
+                md(nr.groupby("fault").state_changed_excluding_injection.mean().to_frame()), ""]
+    else:
+        out += ["Historical `state_changed` includes the harness's injected note itself; an injection-only "
+                "state difference does not establish an agent-caused effect.", ""]
+    out += ["### Paired clean-success stratum", "",
+            md(nr.groupby(["fault_class", "fault", "clean_reward"]).agg(
+                tasks=("task_index", "size"), success=("success", "mean"),
+                outcome_changed=("outcome_changed", "mean"))), ""]
+    timing = r.groupby("condition").agg(observed_wall_s=("wall_s", "mean"),
+                                         original_model_service_s=("llm_latency_s", "mean"),
+                                         estimated_inference_s=("est_latency_s", "mean"))
+    out += ["### Timing definitions kept separate", "", md(timing), ""]
+    paired_cost = r.merge(nr[["task_index", "fault", "wall_s", "llm_latency_s", "est_latency_s"]],
+                          on=["task_index", "fault"], suffixes=("", "_faulted"), validate="many_to_one")
+    restart = paired_cost.condition.str.startswith("restart")
+    for metric in ("wall_s", "llm_latency_s", "est_latency_s"):
+        paired_cost[f"attempts_{metric}"] = paired_cost[metric] + paired_cost[f"{metric}_faulted"].where(restart, 0)
+    out += ["Total attempt costs (restart includes the faulted attempt and rerun; restore overhead is excluded):", "",
+            md(paired_cost.groupby("condition")[["attempts_wall_s", "attempts_llm_latency_s", "attempts_est_latency_s"]].mean()), ""]
     app = r[r.fault_applied == 1]
     s = app.groupby(["fault", "condition"]).success.mean().unstack()
     out += ["### Success by fault and condition (applied faults)", "", md(s), ""]

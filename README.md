@@ -82,6 +82,50 @@ ollama pull qwen2.5:7b-instruct
 .venv/bin/python analyze_external.py
 ```
 
+### Phase 1 external-agent supplement
+
+The replay agent is a state-recovery control: it does not choose actions from observations,
+so ignoring corrupted reads or malicious notes is not evidence of robustness. The additional
+LLM study uses three preselected retail tasks (17, 48, 53), one address change and two returns.
+The ordinary agent and a **grounded variant** are recorded separately. The grounded variant
+prefetches the current customer record and all their orders through the same fault and
+verification hooks; it never supplies ground-truth actions or expected answers. The existing
+tau-bench `ToolCallingAgent`, tools, policy, and reward implementation are retained. This is
+an adapted observation protocol, not an unmodified benchmark score.
+
+Run Ollama with enough context for the retail tools, policy, and records (the supplement uses
+`OLLAMA_CONTEXT_LENGTH=16384 ollama serve`). Use a separate cache directory when model/server
+settings change. These are local inference runs; no paid API is needed.
+
+```bash
+.venv/bin/python run_taubench.py --phase clean --agent llm --tasks 17,48,53 --max-steps 16 --workers 1 --cache-dir cache/tau_ctx16k --out results/taubench_llm_phase1
+.venv/bin/python run_taubench.py --phase clean --agent llm --tasks 17,48,53 --max-steps 16 --workers 1 --prefetch --cache-dir cache/tau_ctx16k --out results/taubench_llm_grounded
+.venv/bin/python run_taubench.py --phase faults --agent llm --tasks 17,48,53 --include-clean-failures --max-steps 16 --workers 1 --prefetch --faults corrupt_read,wrong_args,injection --cache-dir cache/tau_ctx16k --out results/taubench_llm_grounded
+.venv/bin/python analyze_external.py --tau results/taubench_llm_grounded --lg results/langgraph_scripted --native results/scripted --out results/taubench_llm_grounded/summary.md
+```
+
+All tasks in the preselected cohort remain in the fault study, including clean failures;
+results are also stratified by paired clean success. The same 16-step budget applies to each
+attempt, and restart totals charge both the faulted attempt and the rerun. Fault exposure in
+a later model prompt is measured separately from changes in actions or correctness. Tool
+events record conservative conversation dependencies (every prior event), not inferred
+minimal causal dependencies. Traces retain model inputs, responses, observations, and tool
+actions. Injection-only changes to the database note are excluded from the separate
+`state_changed_excluding_injection` metric.
+
+### Metric interpretation
+
+`clean_detection_rate` means a verifier flagged an uninjected run; it is not a false-positive
+rate, because the model can make natural errors. A false-positive rate requires independent
+adjudication of the checked artifacts. Historical CSV `false_positive` fields are legacy
+unadjudicated detection flags and are not used as false-positive estimates. Harmful-fault
+miss rates use the same task, fault, and seed as the no-recovery counterfactual.
+
+Latency has three distinct meanings: `wall_s` is actual elapsed harness time;
+`latency_s` in the main workflow sums stage times, original cached model call times, and
+simulated timeout charges; `est_latency_s` in analysis is a token-throughput estimate.
+The latter two are neither cold-cache elapsed measurements nor additional independent trials.
+
 Useful flags: `--task-ids T01,T12`, `--faults inflate,stale`, `--conditions clean,no_recovery`,
 `--seeds 0,1,2 --temperature 0.7`, `--no-cache`.
 
@@ -95,7 +139,7 @@ later in the pipeline.
 | Condition | Meaning |
 |---|---|
 | `clean` | No fault. Also the counterfactual reference for every faulted run of that task. |
-| `clean_verify_rule`, `clean_verify_llm` | No fault, with verification (fixed overhead, false positives). |
+| `clean_verify_rule`, `clean_verify_llm` | No injected fault, with verification (fixed overhead and clean-run detections). |
 | `no_recovery` | Fault injected; workflow runs to completion. Measures propagation. |
 | `restart_snapshot` | After the (oracle-identified) fault: restore the DB snapshot, rerun all stages. |
 | `restart_compensate` | Undo our own reversible actions, keep external changes, rerun all stages. |

@@ -144,7 +144,8 @@ def run_task(task: dict, ctx: Ctx, conditions: list[str], fault_filter: list[str
         if cond in conditions and vname in ctx.verifiers:
             r = run_once(task, None, vname, ctx, f"{tid}__{cond}__{sfx}")
             row = _finish_row(_base_row(task, None, cond, ctx), *r[:2], *r[3:], None, None, ctx)
-            row["false_positive"] = int(row["detected"])
+            # No injected fault does not imply error-free model output.
+            row["clean_detection"] = int(row["detected"])
             rows.append(row)
 
     specs = build_schedule(task)

@@ -1,5 +1,6 @@
 """tau-bench harness tests with a ground-truth-replay agent (no LLM)."""
 import pytest
+from types import SimpleNamespace
 
 tb = pytest.importorskip("masrec.taubench")
 from tau_bench.envs.retail.tasks_test import TASKS_TEST  # noqa: E402
@@ -68,3 +69,60 @@ def test_injection_is_persistent_graded_on_same_data_and_sanitized():
     assert rr.final_data["orders"][f.target_order]["note"] == tb.INJECTION_TEXT
     rr, f = run(EXCHANGE, "injection", verify=True)
     assert rr.verifier.failures >= 1
+
+
+def test_exposure_requires_faulty_content_in_a_later_model_prompt():
+    rr = SimpleNamespace(log=[{"faulty_observation": "bad fact"}], usage=[])
+    assert not tb.fault_exposed(rr, "corrupt_read")  # replay supplies no evidence
+    rr.usage = [{"messages": [{"role": "tool", "content": "repaired fact"}]}]
+    assert not tb.fault_exposed(rr, "corrupt_read")
+    rr.usage = [{"messages": [{"role": "tool", "content": "bad fact"}]}]
+    assert tb.fault_exposed(rr, "corrupt_read")
+    assert not tb.fault_exposed(rr, "injection")
+    rr.usage = [{"messages": [{"role": "tool", "content": tb.INJECTION_TEXT}]}]
+    assert tb.fault_exposed(rr, "injection")
+
+
+def test_trace_dependencies_precede_events_and_reads_have_observations():
+    rr, _ = run(EXCHANGE)
+    for i, e in enumerate(rr.log):
+        assert e["event_id"] == i
+        assert e["depends_on"] == list(range(i))  # conservative conversation dependencies
+        if not e["write"]:
+            assert isinstance(e["observation"], str)
+
+
+def test_prefetch_routes_current_records_through_fault_and_verifier():
+    clean = tb.FaultyRetailEnv(EXCHANGE, prefetch=True).reset(EXCHANGE).observation
+    f = tb.make_fault("corrupt_read", TASKS_TEST[EXCHANGE], load_data())
+    env = tb.FaultyRetailEnv(EXCHANGE, fault=f, prefetch=True)
+    corrupt = env.reset(EXCHANGE).observation
+    assert f.applied and corrupt != clean
+    assert any(e.get("faulty_observation") for e in env.log)
+    f = tb.make_fault("corrupt_read", TASKS_TEST[EXCHANGE], load_data())
+    verifier = tb.TauRuleVerifier()
+    env = tb.FaultyRetailEnv(EXCHANGE, fault=f, verifier=verifier, prefetch=True)
+    assert env.reset(EXCHANGE).observation == clean
+    assert f.applied and verifier.failures == 1
+
+
+def test_agent_state_comparison_excludes_the_injected_note_only():
+    data = load_data()
+    clean_hash = tb.data_hash(data)
+    f = tb.make_fault("injection", TASKS_TEST[EXCHANGE], data)
+    tb.inject_data(data, f)
+    assert tb.data_hash(data) != clean_hash
+    assert tb.agent_data_hash(data) == clean_hash
+    data["users"][f.user_id]["address"] = tb.ATTACKER_ADDRESS
+    assert tb.agent_data_hash(data) != clean_hash
+
+
+def test_verifier_sanitizes_injected_notes_in_successful_write_responses():
+    f = tb.make_fault("injection", TASKS_TEST[ADDRESS], load_data())
+    verifier = tb.TauRuleVerifier()
+    env = tb.FaultyRetailEnv(ADDRESS, fault=f, verifier=verifier, prefetch=True)
+    assert tb.INJECTION_TEXT not in env.reset(ADDRESS).observation
+    result = env.step(tb.gt_writes(TASKS_TEST[ADDRESS])[0])
+    assert tb.INJECTION_TEXT not in result.observation
+    assert env.data["orders"][f.target_order]["note"] == tb.INJECTION_TEXT
+    assert verifier.failures >= 2  # initial read and successful write return

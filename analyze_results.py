@@ -89,9 +89,14 @@ def main(path: str, extra: list[str] = ()):
         est_latency_s=("est_latency_s", "mean"), measured_latency_s=("latency_s", "mean"),
         llm_calls=("llm_calls", "mean"), tokens=("tokens", "mean"),
         verify_checks=("verify_checks", "mean"), verify_reads=("verify_reads", "mean"),
-        false_positive_rate=("detected", "mean"), unauthorized=("unauthorized_executed", "mean"))
+        clean_detection_rate=("detected", "mean"), unauthorized=("unauthorized_executed", "mean"))
     t1 = t1.loc[_ordered(t1.index, ["clean", "clean_verify_rule", "clean_verify_llm"])]
-    S += ["## 1. Clean baseline and the fixed cost of always verifying\n", md(t1), ""]
+    S += ["## 1. Clean baseline and the fixed cost of always verifying\n", md(t1), "",
+          "Clean detection rate is not a false-positive rate: uninjected runs can contain natural model errors. "
+          "Verifier decisions have not all been independently adjudicated.\n",
+          "`measured_latency_s` is serial service-time accounting (original call times on cache hits), "
+          "including simulated timeout charges. `wall_s` in runs.csv is observed harness elapsed time. "
+          "`est_latency_s` is a token-throughput estimate, not a measured end-to-end time.\n"]
     cl = d[d.condition == "clean"]
     S += ["Clean success by task category:\n",
           md(cl.groupby("category")[["success", "optimal", "est_latency_s"]].mean()), ""]
@@ -174,8 +179,8 @@ def main(path: str, extra: list[str] = ()):
     # ------------------------------------------------------------------ verification
     vf = fa[fa.condition.str.startswith("verify")]
     if len(vf):
-        harmful = set(zip(nra[nra.outcome_changed == 1].task_id, nra[nra.outcome_changed == 1].fault_id))
-        vf = vf.assign(harmful=[(a, b) in harmful for a, b in zip(vf.task_id, vf.fault_id)])
+        harmful = set(nra.loc[nra.outcome_changed == 1, ["task_id", "fault_id", "seed"]].itertuples(index=False, name=None))
+        vf = vf.assign(harmful=[key in harmful for key in vf[["task_id", "fault_id", "seed"]].itertuples(index=False, name=None)])
         t6 = vf.groupby("condition").agg(
             runs=("success", "size"), success=("success", "mean"), detected=("detected", "mean"),
             unauthorized_rate=("unauthorized_executed", lambda s: (s > 0).mean()),
@@ -184,11 +189,13 @@ def main(path: str, extra: list[str] = ()):
         miss = vf[vf.harmful].groupby("condition").agg(
             harmful_faults=("detected", "size"), detected_harmful=("detected", "mean"),
             success_on_harmful=("success", "mean"))
+        miss["missed_harmful_rate"] = 1 - miss.detected_harmful
         fp = clean[clean.condition.str.startswith("clean_verify")].groupby("condition")["detected"].mean()
         S += ["## 5. Always-verify baselines\n", md(t6), "",
-              "Detection quality (harmful = changed the outcome in the no-recovery run). False positives are "
-              "measured on clean runs.\n", md(miss), "",
-              md(fp.to_frame("false_positive_rate")), ""]
+              "Detection quality (harmful = changed the outcome in the paired no-recovery run). "
+              "Miss rate is 1 minus detected_harmful. Clean detections are reported separately; "
+              "false positives require independent artifact-level adjudication.\n", md(miss), "",
+              md(fp.to_frame("clean_detection_rate")), ""]
         t6b = vf.pivot_table(index="fault_id", columns="condition", values="detected", aggfunc="mean")
         S += ["Detection rate by fault:\n", md(t6b.loc[_ordered(t6b.index, FAULT_ORDER)]), ""]
 

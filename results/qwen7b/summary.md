@@ -25,11 +25,15 @@
 
 ## 1. Clean baseline and the fixed cost of always verifying
 
-| condition | runs | success | optimal | est_latency_s | measured_latency_s | llm_calls | tokens | verify_checks | verify_reads | false_positive_rate | unauthorized |
+| condition | runs | success | optimal | est_latency_s | measured_latency_s | llm_calls | tokens | verify_checks | verify_reads | clean_detection_rate | unauthorized |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | clean | 25 | 0.96 | 0.96 | 27.83 | 102.42 | 3.00 | 2413.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 | clean_verify_rule | 25 | 0.96 | 0.96 | 27.80 | 101.83 | 3.00 | 2399.88 | 3.00 | 9.48 | 0.04 | 0.00 |
 | clean_verify_llm | 25 | 0.84 | 0.84 | 64.11 | 224.48 | 6.08 | 5272.08 | 3.04 | 10.80 | 0.16 | 0.00 |
+
+Clean detection rate is not a false-positive rate: uninjected runs can contain natural model errors. Verifier decisions have not all been independently adjudicated.
+
+`measured_latency_s` is serial service-time accounting (original call times on cache hits), including simulated timeout charges. `wall_s` in runs.csv is observed harness elapsed time. `est_latency_s` is a token-throughput estimate, not a measured end-to-end time.
 
 Clean success by task category:
 
@@ -178,14 +182,14 @@ Strict recovery by fault:
 | verify_llm | 424 | 0.58 | 0.53 | 0.00 | 76.91 | 6.81 | 5998.70 | 3.46 |
 | verify_rule | 424 | 0.96 | 0.98 | 0.00 | 40.76 | 3.70 | 3029.41 | 3.76 |
 
-Detection quality (harmful = changed the outcome in the no-recovery run). False positives are measured on clean runs.
+Detection quality (harmful = changed the outcome in the paired no-recovery run). Miss rate is 1 minus detected_harmful. Clean detections are reported separately; false positives require independent artifact-level adjudication.
 
-| condition | harmful_faults | detected_harmful | success_on_harmful |
-|---|---|---|---|
-| verify_llm | 177 | 0.54 | 0.37 |
-| verify_rule | 177 | 1.00 | 0.99 |
+| condition | harmful_faults | detected_harmful | success_on_harmful | missed_harmful_rate |
+|---|---|---|---|---|
+| verify_llm | 177 | 0.54 | 0.37 | 0.46 |
+| verify_rule | 177 | 1.00 | 0.99 | 0.00 |
 
-| condition | false_positive_rate |
+| condition | clean_detection_rate |
 |---|---|
 | clean_verify_llm | 0.16 |
 | clean_verify_rule | 0.04 |

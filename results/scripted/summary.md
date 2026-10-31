@@ -25,10 +25,14 @@
 
 ## 1. Clean baseline and the fixed cost of always verifying
 
-| condition | runs | success | optimal | est_latency_s | measured_latency_s | llm_calls | tokens | verify_checks | verify_reads | false_positive_rate | unauthorized |
+| condition | runs | success | optimal | est_latency_s | measured_latency_s | llm_calls | tokens | verify_checks | verify_reads | clean_detection_rate | unauthorized |
 |---|---|---|---|---|---|---|---|---|---|---|---|
 | clean | 25 | 1.00 | 1.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 | 0.00 |
 | clean_verify_rule | 25 | 1.00 | 1.00 | 0.00 | 0.00 | 0.00 | 0.00 | 3.00 | 9.28 | 0.00 | 0.00 |
+
+Clean detection rate is not a false-positive rate: uninjected runs can contain natural model errors. Verifier decisions have not all been independently adjudicated.
+
+`measured_latency_s` is serial service-time accounting (original call times on cache hits), including simulated timeout charges. `wall_s` in runs.csv is observed harness elapsed time. `est_latency_s` is a token-throughput estimate, not a measured end-to-end time.
 
 Clean success by task category:
 
@@ -172,13 +176,13 @@ Strict recovery by fault:
 |---|---|---|---|---|---|---|---|---|
 | verify_rule | 424 | 1.00 | 1.00 | 0.00 | 5.31 | 0.00 | 0.00 | 3.79 |
 
-Detection quality (harmful = changed the outcome in the no-recovery run). False positives are measured on clean runs.
+Detection quality (harmful = changed the outcome in the paired no-recovery run). Miss rate is 1 minus detected_harmful. Clean detections are reported separately; false positives require independent artifact-level adjudication.
 
-| condition | harmful_faults | detected_harmful | success_on_harmful |
-|---|---|---|---|
-| verify_rule | 233 | 1.00 | 1.00 |
+| condition | harmful_faults | detected_harmful | success_on_harmful | missed_harmful_rate |
+|---|---|---|---|---|
+| verify_rule | 233 | 1.00 | 1.00 | 0.00 |
 
-| condition | false_positive_rate |
+| condition | clean_detection_rate |
 |---|---|
 | clean_verify_rule | 0.00 |
 
