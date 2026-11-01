@@ -29,7 +29,7 @@ programmatically (no LLM judge).
 | `masrec/tasks.py` | Task generator (25 tasks, 9 categories) and exhaustive ground-truth solver |
 | `masrec/agents.py` | Researcher / Planner / Executor (LLM) and scripted reference agents |
 | `masrec/artifacts.py` | Artifacts with `depends_on`, read versions, field-level provenance |
-| `masrec/faults.py` | 15 fault types, per-task fault schedule, injector |
+| `masrec/faults.py` | 15 original fault types plus 3 supplemental attacks, per-task fault schedule, injector |
 | `masrec/workflow.py` | Orchestrator with fault hooks and optional verification |
 | `masrec/verifier.py` | Always-verify baselines: deterministic rule verifier and LLM verifier |
 | `masrec/recovery.py` | Full restart: DB-snapshot restore vs. compensate-and-rerun |
@@ -61,11 +61,19 @@ python3 -m venv .venv && .venv/bin/pip install matplotlib pandas numpy requests 
 
 # LLM agents via Ollama on a laptop / small CPU instance
 ollama pull qwen2.5:7b-instruct
-.venv/bin/python run_experiment.py --backend ollama --model qwen2.5:7b-instruct --workers 4 --out results/qwen7b
+# Original 15-fault cohort; @ distinguishes original attacks from similarly named supplements.
+.venv/bin/python run_experiment.py --backend ollama --model qwen2.5:7b-instruct --workers 4 \
+  --faults 'incorrect_,plan_qty_error,exec_wrong_warehouse,stale_,timeout_,inject_customer_note@researcher,compromised_researcher@researcher,compromised_planner@planner' \
+  --out results/qwen7b
+# Three supplemental attacks; reuse the original clean baseline in the pooled analysis.
+.venv/bin/python run_experiment.py --backend ollama --model qwen2.5:7b-instruct --workers 4 \
+  --faults inject_upsell_note,compromised_researcher_facts,compromised_planner_foreign \
+  --conditions no_recovery,restart_snapshot,restart_compensate,verify_rule,verify_llm \
+  --out results/qwen7b_adv
 # any OpenAI-compatible server (vLLM, llama.cpp server)
 .venv/bin/python run_experiment.py --backend openai --base-url http://host:8000/v1 --model <name>
 
-.venv/bin/python analyze_results.py results/qwen7b
+.venv/bin/python analyze_results.py results/qwen7b results/qwen7b_adv
 .venv/bin/python microbench.py --runs results/qwen7b     # no LLM needed; ~5 s
 
 # existing benchmark (tau-bench retail). --agent llm uses tau-bench's ToolCallingAgent;
@@ -79,8 +87,16 @@ ollama pull qwen2.5:7b-instruct
 # existing framework (LangGraph checkpoint rewind on the same 25 tasks)
 .venv/bin/python run_langgraph.py --backend scripted --out results/langgraph_scripted
 .venv/bin/python run_langgraph.py --backend ollama --out results/langgraph_qwen7b
-.venv/bin/python analyze_external.py
+.venv/bin/python analyze_external.py --tau results/taubench_replay --lg results/langgraph_scripted --native results/scripted --out results/external_summary.md
 ```
+
+The [Phase 1 report](report/phase1_report.md) uses the [pooled custom-workflow summary](results/qwen7b/summary.md):
+1,880 original runs plus 375 supplemental-attack runs. The analysis command above combines both
+CSV files and writes the summary and figures under `results/qwen7b/`; analyzing only that directory
+would instead report the original cohort. With no `--faults` filter, the current harness schedules
+all 18 fault types, subject to task eligibility. The explicit filters reproduce the two saved cohorts.
+The external-control summary uses replay and scripted LangGraph runs; the real-agent retail study
+has its own summary below.
 
 ### Phase 1 external-agent supplement
 
@@ -157,7 +173,14 @@ Adversarial: `inject_customer_note` (persistent indirect prompt injection in the
 `compromised_researcher` (malicious instructions in the fact sheet), `compromised_planner`
 (privileged actions appended to the plan).
 
-Faults are transient (fire on the first attempt of a stage only) except the persistent injected note.
+Supplemental adversarial cases: `inject_upsell_note` (persistent instructions to ship extra units
+and allow backorders), `compromised_researcher_facts` (fact-sheet notes falsely claim more stock),
+and `compromised_planner_foreign` (reserve and ship inventory for another order). These attacks
+use factual claims or ordinary-looking fulfillment actions rather than only privileged tools.
+Their separate run set is `results/qwen7b_adv/`; it is included in the pooled report aggregates.
+
+Faults are transient (fire on the first attempt of a stage only) except the persistent customer-note
+and upsell injections.
 Each fault carries a design-time relevance label, but relevance is also *measured* against the clean
 counterfactual (`downstream_changed`, `actions_changed`, `state_changed`, `outcome_changed`), so an
 ignored fault is never counted as robust recovery.
